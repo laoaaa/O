@@ -348,6 +348,10 @@ clearIndexBtn.addEventListener('click', () => {
 
     // Handle Copying Target Text
     function handleCopyTarget() {
+        if (!navigator.clipboard || !navigator.clipboard.writeText) {
+            showError('当前环境不支持一键复制，请手动全选译文后复制。');
+            return;
+        }
         const textToCopy = getCleanTranslationText();
         if (!textToCopy) {
             showRealtimeHint('没有可复制的译文');
