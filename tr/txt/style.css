@@ -1,0 +1,803 @@
+/* 保留原有CSS样式 */
+:root {
+    --primary-color: #5B1010;
+    --secondary-color: #8A2222;
+    --bg-color: #f9f9f9;
+    --text-color: #333;
+    --highlight-color: #FFECB3;
+    --container-width: 1200px;
+    --border-color: #E0E0E0;
+    --header-bg: #2F2F2F;
+    --font-serif: 'Garamond', 'Times New Roman', Georgia, serif;
+    --font-sans: 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    font-family: var(--font-serif); /* Default to serif for main text */
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 20px auto; /* Added top/bottom margin */
+    padding: 0 20px; /* Added horizontal padding */
+    background-color: #fff; /* White background for content area */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Subtle shadow */
+    border-radius: 4px; /* Slightly rounded corners */
+    padding-bottom: 20px;
+}
+
+header {
+    background-color: var(--header-bg);
+    color: white;
+    padding: 20px 0;
+    margin: -20px -20px 30px -20px; /* Adjust to span full width */
+    border-radius: 4px 4px 0 0; /* Match container radius */
+    text-align: center;
+}
+
+h1 {
+    font-family: var(--font-serif);
+    font-weight: normal;
+    font-size: 2.2rem;
+    margin-bottom: 5px;
+}
+
+.description {
+    color: #CCC;
+    max-width: 800px;
+    margin: 0 auto;
+    font-style: italic;
+    font-size: 1rem;
+    font-family: var(--font-sans); /* Sans-serif for description */
+}
+
+.story-title {
+    font-size: 1.8rem;
+    font-weight: normal;
+    text-align: center;
+    color: var(--primary-color);
+    margin: 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    font-family: var(--font-serif);
+}
+
+.back-link {
+    display: inline-block;
+    margin: 0 0 20px 20px;
+    color: #FFF;
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* 导航样式 */
+.tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+    font-family: var(--font-sans);
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #777;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+}
+
+.tab.active {
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    font-weight: bold;
+}
+
+/* 文本显示区域 */
+.text-container {
+    display: flex;
+    margin-bottom: 30px; /* Reduced margin */
+    min-height: 400px; /* Reduced min-height */
+    border: 1px solid var(--border-color); /* Add border around container */
+    border-radius: 3px;
+}
+
+.text-column {
+    flex: 1 0 0; /* Allow shrinking and growing, base width 0 */
+    min-width: 0; /* Prevent overflow issues */
+    padding: 15px; /* Uniform padding */
+    border-right: 1px solid var(--border-color);
+    position: relative; /* For absolute positioning inside */
+}
+
+.text-column:last-child {
+    border-right: none;
+}
+
+.column-header {
+    font-family: var(--font-sans);
+    color: var(--primary-color);
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text-content {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    white-space: pre-line; /* Render newlines but wrap text */
+    height: 450px; /* Fixed height */
+    overflow-y: auto; /* Enable scrolling */
+    position: relative;
+    padding: 10px; /* Add padding inside content */
+    border: 1px solid #eee; /* Slight border for definition */
+    background-color: #fff; /* Ensure white background */
+    border-radius: 2px;
+}
+
+/* Ensure scrollbar is visible */
+.text-content::-webkit-scrollbar {
+  width: 8px;
+}
+.text-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+.text-content::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+.text-content::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+
+/* 每行编号 (No longer used with sentence-based approach) */
+.line { display: none; }
+.line-number { display: none; }
+.line-text { display: inline; } /* Display line text normally */
+
+/* 段落 */
+.paragraph {
+    margin-bottom: 1.5em; /* Space between paragraphs */
+    position: relative;
+}
+
+.sentence {
+    cursor: pointer;
+    transition: background-color 0.2s;
+    padding: 1px 3px; /* Reduced padding */
+    border-radius: 2px;
+    margin: 0 -3px; /* Offset padding */
+    position: relative;
+    display: inline; /* Make sentences flow inline */
+}
+
+.sentence:hover {
+    background-color: var(--highlight-color);
+}
+
+.highlight {
+    background-color: var(--highlight-color) !important;
+    border-radius: 2px;
+}
+
+.permanent-highlight {
+    background-color: var(--highlight-color) !important;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(91, 16, 16, 0.3);
+}
+
+/* 调整句子编号样式 */
+.sentence-number {
+    color: #aaa; /* Lighter color */
+    font-size: 0.7rem;
+    margin-right: 2px; /* Less space */
+    vertical-align: super;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    position: relative;
+    user-select: none; /* Prevent selection */
+}
+
+/* 句子编号的操作按钮样式 */
+.sentence-actions {
+    position: absolute;
+    top: -22px; /* Position above the number */
+    left: -5px;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    padding: 2px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 10;
+    display: none;
+    white-space: nowrap; /* Prevent wrapping */
+}
+
+.sentence-action-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 2px;
+    padding: 2px 5px;
+    margin: 0 1px; /* Tighter spacing */
+    font-size: 0.7rem;
+    cursor: pointer;
+    font-family: var(--font-sans);
+}
+
+.sentence-action-btn:hover {
+    background: var(--secondary-color);
+}
+
+/* 编辑模式的样式 */
+.edit-mode {
+    background-color: #f0f0f0; /* Slight background for editing sentence */
+    padding: 5px;
+    border-radius: 3px;
+    display: block; /* Ensure it takes full width in edit */
+    margin-bottom: 5px;
+}
+
+.edit-mode .sentence-text {
+    display: none; /* Hide original text span */
+}
+
+textarea.sentence-edit-textarea {
+    width: 100%;
+    min-height: 60px;
+    padding: 5px;
+    border: 1px solid var(--primary-color);
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    background-color: #fff;
+    box-shadow: 0 0 3px rgba(91, 16, 16, 0.3);
+    margin-bottom: 5px;
+    resize: vertical; /* Allow vertical resize */
+}
+
+.edit-controls {
+    margin-top: 5px;
+    text-align: right;
+    display: block; /* Always show when in edit mode */
+}
+
+.edit-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 2px;
+    padding: 3px 8px;
+    margin-left: 5px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-family: var(--font-sans);
+}
+
+.edit-btn:hover {
+    background: var(--secondary-color);
+}
+.edit-btn[style*="background-color: #888"]:hover {
+     background-color: #666 !important; /* Darker gray on hover for cancel */
+}
+
+
+/* API设置区域 */
+.api-settings {
+    background: #fdfdfd; /* Slightly off-white */
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-family: var(--font-sans);
+}
+
+.settings-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer; /* Make header clickable */
+}
+
+.settings-toggle {
+    color: var(--primary-color);
+    user-select: none;
+    font-size: 0.9rem;
+}
+
+.settings-content {
+    display: none;
+    margin-top: 15px; /* More space */
+    border-top: 1px solid #eee; /* Separator line */
+    padding-top: 15px;
+}
+
+.settings-content.show {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+select, input[type="text"] {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    font-size: 0.9rem;
+    font-family: var(--font-sans);
+}
+select:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 3px rgba(91, 16, 16, 0.2);
+}
+
+.button-container {
+    text-align: center;
+    margin: 25px 0 30px; /* Increased top margin */
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px; /* Larger buttons */
+    font-size: 1rem; /* Larger font */
+    border-radius: 3px; /* Slightly more rounded */
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    font-family: var(--font-sans);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+button:disabled:hover {
+     background-color: #ccc; /* Keep disabled color on hover */
+}
+
+
+.copy-btn {
+    background: transparent;
+    border: none;
+    color: var(--primary-color);
+    padding: 0 5px; /* Add some padding */
+    font-size: 0.9rem; /* Slightly larger */
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-weight: 500; /* Medium weight */
+    box-shadow: none; /* Override button shadow */
+}
+.copy-btn:hover {
+    text-decoration: underline;
+    background-color: transparent; /* Ensure no background on hover */
+    box-shadow: none;
+}
+.copy-btn:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+
+/* 加载状态 */
+.loading {
+    text-align: center;
+    margin: 20px 0;
+    font-family: var(--font-sans);
+    display: none; /* Initially hidden */
+}
+
+.spinner {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(91, 16, 16, 0.3); /* Thicker border */
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 10px; /* Space below spinner */
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.progress-bar {
+    height: 6px; /* Thicker bar */
+    background-color: #e0e0e0;
+    border-radius: 3px;
+    margin: 10px auto;
+    max-width: 300px;
+    overflow: hidden;
+    display: none; /* Initially hidden */
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: var(--primary-color);
+    width: 0%;
+    transition: width 0.3s ease-out; /* Smoother transition */
+    border-radius: 3px;
+}
+
+.status-message {
+    margin-top: 10px;
+    color: #666;
+    font-size: 0.9rem;
+    display: none; /* Initially hidden */
+}
+
+.error-message {
+    color: #D32F2F;
+    text-align: center;
+    margin: 15px 20px; /* More space */
+    padding: 10px;
+    background-color: #FFEBEE; /* Light red background */
+    border: 1px solid #FFCDD2; /* Red border */
+    border-radius: 3px;
+    display: none;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+}
+
+/* Proper Noun Index Container (replaces usage-instructions) */
+.proper-noun-index-container {
+    margin: 25px 0; /* Space around the index */
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #333;
+    font-family: var(--font-sans);
+    border: 1px solid #e0e0e0;
+}
+.proper-noun-index-container h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+    font-weight: 600; /* Bolder */
+}
+#proper-noun-index-content p {
+    color: #666;
+    font-style: italic;
+}
+/* Index Table Styles */
+#proper-noun-index-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+#proper-noun-index-table th,
+#proper-noun-index-table td {
+    border: 1px solid #ddd;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+}
+#proper-noun-index-table th {
+    background-color: #eee;
+    font-weight: bold;
+}
+#proper-noun-index-table td:nth-child(1) { /* Original Term */
+    width: 40%;
+    font-family: var(--font-serif); /* Use serif for original term */
+}
+#proper-noun-index-table td:nth-child(2) { /* Chinese Translation */
+    width: 40%;
+}
+#proper-noun-index-table td:nth-child(3) { /* Actions */
+    width: 20%;
+    text-align: center;
+}
+
+/* Editable span in index */
+.editable-translation {
+    display: inline-block;
+    min-width: 100px; /* Minimum width */
+    padding: 3px 5px;
+    border: 1px dashed #ccc;
+    background-color: #fff;
+    cursor: text;
+    border-radius: 2px;
+}
+.editable-translation:focus {
+    outline: none;
+    border: 1px solid var(--primary-color);
+    background-color: #fff;
+    box-shadow: 0 0 3px rgba(91, 16, 16, 0.2);
+}
+
+/* Save button in index */
+.save-index-btn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: var(--font-sans);
+    margin-left: 5px; /* Space if needed */
+}
+.save-index-btn:hover {
+    background-color: #388E3C; /* Darker Green */
+}
+
+
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border-color);
+    color: #999; /* Lighter text */
+    font-size: 0.8rem;
+    font-family: var(--font-sans);
+}
+
+/* 缺失翻译标记样式 */
+.missing-translation {
+    background-color: #FFCDD2 !important; /* Use important if needed */
+    padding: 1px 3px;
+    border-radius: 2px;
+    color: #B71C1C !important;
+    border: 1px solid #EF9A9A; /* Slight border */
+}
+
+
+/* 实时提示 */
+.realtime-hint {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(91, 16, 16, 0.9); /* Slightly transparent */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1001; /* Above overlay */
+    display: none; /* Initially hidden */
+    opacity: 0; /* Start invisible */
+    transition: opacity 0.5s ease-in-out;
+}
+.realtime-hint.show {
+    display: block;
+    opacity: 1;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        padding: 0 10px;
+    }
+    header {
+        margin: -10px -10px 20px -10px;
+        padding: 15px 0;
+    }
+    h1 {
+        font-size: 1.8rem;
+    }
+    .description {
+        font-size: 0.9rem;
+    }
+    .text-container {
+        flex-direction: column;
+        min-height: auto; /* Remove fixed min-height */
+    }
+
+    .text-column {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding: 10px;
+        margin-bottom: 15px;
+        max-width: none; /* Override max-width */
+    }
+
+    .text-column:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+    .text-content {
+        height: 350px; /* Adjust height for smaller screens */
+        font-size: 1rem; /* Adjust font size */
+    }
+    #proper-noun-index-table th,
+    #proper-noun-index-table td {
+        padding: 6px 8px;
+        font-size: 0.85rem;
+    }
+    #proper-noun-index-table td:nth-child(1),
+    #proper-noun-index-table td:nth-child(2) {
+         width: 38%;
+    }
+     #proper-noun-index-table td:nth-child(3) {
+         width: 24%;
+    }
+    .realtime-hint {
+        bottom: 10px;
+        right: 10px;
+        padding: 8px 12px;
+    }
+}
+
+/* 弹窗确认样式 */
+.confirm-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 25px; /* More padding */
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1000;
+    display: none;
+    font-family: var(--font-sans);
+    max-width: 400px;
+    width: 90%;
+}
+
+.confirm-dialog h3 {
+    margin-top: 0;
+    margin-bottom: 15px; /* Space below title */
+    color: var(--primary-color);
+    font-size: 1.3rem;
+}
+.confirm-dialog p {
+    margin-bottom: 20px; /* Space below message */
+    font-size: 1rem;
+}
+
+.confirm-dialog-actions {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.confirm-dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+    display: none;
+}
+
+/* Source content editable prompt */
+#source-content[contenteditable=true] {
+    /* Styles removed, handled by text-content now */
+}
+#source-content[contenteditable=true]:focus {
+    outline: none;
+    /* Focus styles handled by text-content focus if needed */
+}
+.empty-prompt {
+    color: #999;
+    font-style: italic;
+    position: absolute; /* Position over the text area */
+    top: 10px;
+    left: 10px;
+    padding: 5px;
+    pointer-events: none; /* Allow clicks through */
+}
+#source-content:not(:empty) .empty-prompt {
+    display: none; /* Hide prompt when content exists */
+}
+#source-content:focus .empty-prompt {
+    display: none; /* Hide prompt when focused */
+}
+
+/* Poetry specific styles (if needed later, currently handled by general classes) */
+.poetry-mode .paragraph { margin-bottom: 0.5em; }
+.poetry-mode .sentence { display: block; }
+.poetry-mode .sentence-number { /* Any specific poetry styles */ }
+
+/* Styles for the pre container used in potential poetry rendering */
+.poetry-pre-container {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+.poetry-line, .title-line {
+    position: relative;
+    margin-bottom: 0.2em;
+}
+.title-line {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1em;
+    font-size: 1.2em;
+}
+.empty-line {
+    height: 1em;
+    display: block;
+}
+/* --- 添加到 style.css 文件末尾 --- */
+
+/* 索引区域头部样式 */
+.index-header {
+    display: flex; /* 使用 Flexbox 布局 */
+    justify-content: space-between; /* 两端对齐 */
+    align-items: center; /* 垂直居中 */
+    margin-bottom: 15px; /* 头部和表格之间的间距 */
+    padding-bottom: 8px; /* 头部下方的内边距 */
+    border-bottom: 1px solid #ddd; /* 头部下方的分割线 */
+}
+
+/* 清空按钮样式 */
+button.clear-btn {
+    background-color: #f44336; /* 红色背景 */
+    color: white; /* 白色文字 */
+    padding: 5px 10px; /* 内边距 */
+    font-size: 0.85rem; /* 字体大小 */
+    border: none; /* 无边框 */
+    border-radius: 3px; /* 圆角 */
+    cursor: pointer; /* 鼠标指针 */
+    margin-left: 10px; /* 和标题保持一点距离 */
+    transition: background-color 0.3s; /* 过渡效果 */
+    box-shadow: none; /* 可以移除默认按钮阴影 */
+}
+
+button.clear-btn:hover {
+    background-color: #d32f2f; /* 鼠标悬停时深红色 */
+}
+
+/* 可能需要调整表格的上边距，因为现在由 header 控制间距 */
+#proper-noun-index-table {
+    /* margin-top: 0; /* 如果之前设置了 margin-top，可以移除或调整 */
+}
