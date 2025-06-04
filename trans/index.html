@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多语言翻译助手</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/compromise"></script>
+    <script src="https://unpkg.com/compromise-sentences"></script>
+    <script>
+        // Extend compromise with sentences plugin if compromise is loaded
+        if (typeof compromise !== 'undefined') {
+            compromise.extend(compromiseSentences);
+        } else {
+            console.error("Compromise library failed to load.");
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>多语言翻译助手</h1>
+            <p class="description">粘贴任意语言文本，自动翻译成中文，并管理专有名词</p>
+            </header>
+
+        <div class="story-title" id="story-title">文本翻译</div>
+
+        <div class="tabs">
+            <div class="tab active">文本 & 翻译</div>
+            </div>
+
+        <div class="api-settings">
+            <div class="settings-header">
+                <span>API 设置</span>
+                <span class="settings-toggle" id="settings-toggle">显示 ▼</span>
+            </div>
+            <div class="settings-content" id="settings-content">
+                <div class="form-group">
+                    <label for="api-key">豆包 API Key:</label>
+                    <input type="text" id="api-key" placeholder="输入你的豆包 API Key">
+                </div>
+                <div class="form-group">
+                    <label for="model-select">选择模型:</label>
+                    <select id="model-select">
+                        <option value="doubao-1-5-pro-256k-250115">doubao-1-5-pro-256k-250115</option>
+                        <option value="doubao-1-5-thinking-vision-pro-250428">doubao-1-5-thinking-vision-pro-250428</option>
+                    </select>
+                    <label id="enable-thinking-label" style="display:none; margin-top:6px; font-weight:normal;">
+                        <input type="checkbox" id="enable-thinking-checkbox" style="vertical-align:middle;"> 启用 Thinking
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="batch-size">批量处理句子数:</label>
+                    <select id="batch-size">
+                        <option value="10" selected>10</option> <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button id="translate-btn">翻译成中文</button>
+            <button id="stop-btn" style="display:none; margin-left: 10px; background-color: #D32F2F;">停止翻译</button>
+            <button id="retry-btn" style="margin-left: 10px; background-color: #4CAF50; display: none;">重试缺失翻译</button>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>正在翻译中，请稍候...</p>
+            <div class="progress-bar" id="progress-bar">
+                <div class="progress-bar-fill" id="progress-bar-fill"></div>
+            </div>
+            <div class="status-message" id="status-message"></div>
+        </div>
+
+        <div class="error-message" id="error-message"></div>
+
+        <div class="proper-noun-index-container" id="proper-noun-index-container">
+            <div class="index-header"> <h2>专有名词索引</h2>
+                <button id="clear-index-btn" class="clear-btn">清空索引</button> </div>
+            <div id="proper-noun-index-content">
+                <p>翻译后，此处将显示自动识别或手动添加的专有名词及其翻译。您可以编辑译文并保存。</p>
+            </div>
+        </div>
+
+        <div class="text-container">
+            <div class="text-column">
+                <div class="column-header">
+                    <span>源语言文本</span>
+                    <button class="copy-btn" id="paste-source-btn">粘贴</button>
+                    <input type="file" id="image-upload" accept="image/*" style="display:inline-block; margin-left:10px;">
+                </div>
+                <div class="image-preview" id="image-preview" style="display:none; margin-bottom:8px;"></div>
+                <div class="text-content" id="source-content" contenteditable="true">
+                    <div class="empty-prompt">点击"粘贴"按钮或直接在此处粘贴您的文本或截图（支持Ctrl+V粘贴图片）...</div>
+                </div>
+            </div>
+            <div class="text-column">
+                <div class="column-header">
+                    <span>中文译文</span>
+                    <button class="copy-btn" id="copy-target-btn">复制</button>
+                </div>
+                <div class="text-content" id="target-content">翻译将显示在这里...</div>
+            </div>
+        </div>
+
+        <div class="realtime-hint" id="realtime-hint">
+            提示信息
+        </div>
+
+        <div class="confirm-dialog-overlay" id="confirm-overlay"></div>
+        <div class="confirm-dialog" id="confirm-dialog">
+            <h3>确认</h3>
+            <p id="confirm-message">是否执行操作？</p>
+            <div class="confirm-dialog-actions">
+                <button class="edit-btn" id="confirm-cancel-btn">取消</button>
+                <button class="edit-btn" id="confirm-ok-btn">确定</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 多语言翻译助手 | API Key 仅本地使用。</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
